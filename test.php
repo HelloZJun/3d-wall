@@ -18,5 +18,7 @@ if ($rs) {
         var_dump($row);
     }
 }
+
+
 $pdo = null;//关闭连接
 ?>
