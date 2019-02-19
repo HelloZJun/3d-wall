@@ -1,5 +1,5 @@
 <?php
-	$servername = "192.168.61.1597";
+	$servername = "localhost";
     $username = "root";
     $password = "mysql_zj";
     // 创建连接
