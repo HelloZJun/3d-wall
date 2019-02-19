@@ -45,11 +45,7 @@ function responseMsg(){
             $content=$postObj->Content;
             if($content=="签到"){
                 //处理GET数据
-                $servername = "localhost";
-                $username = "wall";
-                $password = "walladmin";
-                // 创建连接
-                $conn = new mysqli($servername, $username, $password,"wall");
+                include 'db.php';
                 $sql = "select id from user where nickname='$nickname'";
                 $data=mysqli_query($conn,$sql);
                 $data=mysqli_fetch_assoc($data);
@@ -70,11 +66,7 @@ function responseMsg(){
             }else{
                 $danmu=mb_substr($content , 0 , 3);
                 if($danmu=="say"){
-                    $servername = "localhost";
-                    $username = "wall";
-                    $password = "walladmin";
-                    // 创建连接
-                    $conn = new mysqli($servername, $username, $password,"wall");
+                    include 'db.php';
                     $sql = "select id from user where nickname='$nickname'";
                     $data=mysqli_query($conn,$sql);
                     $data=mysqli_fetch_assoc($data);
