@@ -170,7 +170,9 @@
     			$.ajax({
 			        url: "ajax_load.php",
 			        dataType: "json",
-			        error: function(){
+			        error: function(data,type,err){
+			        	console.log("ajax错误类型："+type);
+	         			console.log(err);
 			            alert('Error loading JSON document');  
 			        },  
 			        success: function(data){
@@ -269,7 +271,7 @@
 			        }
 			    });	
 			}
-			
+
 			load();//start
 
     		// 模拟推送数据
