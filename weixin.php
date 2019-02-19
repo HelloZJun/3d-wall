@@ -117,8 +117,8 @@ function responseMsg(){
             exit;
         }
     }else{
-            echo "";
-            exit;
+        echo "";
+        exit;
     }
 }
     
