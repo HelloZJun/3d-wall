@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>3d</title>
+		<title>3d-wall</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -119,7 +119,7 @@
 		<script src="js/CSS3DRenderer.js"></script>
 
 		<div id="container"></div>
-		<div id="info">签到墙</div>
+		<div id="info">3d-wall</div>
 		<div id="menu">
 			<button id="table">表格</button>
 			<button id="sphere">球球</button>
@@ -166,18 +166,18 @@
     		var _in = ['bounceIn','bounceInDown','bounceInLeft','bounceInRight','bounceInUp','fadeIn','fadeInDown','fadeInDownBig','fadeInLeft','fadeInLeftBig','fadeInRight','fadeInRightBig','fadeInUp','fadeInUpBig','rotateIn','rotateInDownLeft','rotateInDownRight','rotateInUpLeft','rotateInUpRight','slideInDown','slideInLeft','slideInRight'];
     		var _out = ['bounceOut','bounceOutDown','bounceOutLeft','bounceOutRight','bounceOutUp','fadeOut','fadeOutDown','fadeOutDownBig','fadeOutLeft','fadeOutLeftBig','fadeOutRight','fadeOutRightBig','fadeOutUp','fadeOutUpBig','rotateOut','rotateOutDownLeft','rotateOutDownRight','rotateOutUpLeft','rotateOutUpRight','slideOutDown','slideOutLeft','slideOutRight'];
 
-    		function load(){
+    		function load(){//加载已签到的用户数据
     			$.ajax({
 			        url: "ajax_load.php",
 			        dataType: "json",
 			        error: function(){
 			            alert('Error loading JSON document');  
 			        },  
-			        success: function(data){//如果调用php成功
+			        success: function(data){
 			        		var arr = [];
 							for(var key in data){
 							  arr.push({
-							    headimgurl:data[key][2]
+							    headimgurl:data[key][2]//将已签到的用户头像写入数组
 							  })
 							}
 							var length=arr.length;
@@ -185,24 +185,24 @@
 							for (i ; i < length; i++) {
 								var src=arr[i].headimgurl;
 								var img = document.getElementsByClassName('element')[CurPersonNum].getElementsByTagName('img')[0];
-								img.setAttribute('src',arr[i].headimgurl);
+								img.setAttribute('src',arr[i].headimgurl);//将头像写入页面
 								++CurPersonNum;
 							}
-							getmessages();
+							get_sign_in();
 							getdanmu();
 			        }
 			    });	
 			}
-			function getmessages() {
+			function get_sign_in(){//获取已签到未展示的用户
 				$.ajax({
-			        url: "ajax.php",
+			        url: "ajax_sign_in.php",
 			        dataType: "json",
 			        error: function(){
 			            alert('Error loading JSON document');  
 			        },  
-			        success: function(data){//如果调用php成功
+			        success: function(data){
 			        		if(!data){
-			        			getmessages();
+			        			get_sign_in();
 			        		}else{
 								var rand_in = parseInt(Math.random() * _in.length,10);
 				    			var rand_out = parseInt(Math.random() * _out.length,10);
@@ -216,7 +216,7 @@
 								$('.show_info').addClass(_in[rand_in]);
 								setTimeout(function(){
 									$('.show_info').removeClass(_in[rand_in]);
-									// 更改展示的图片
+									// 将新签到的用户头像写入已签到头像列表
 									var img = document.getElementsByClassName('element')[CurPersonNum].getElementsByTagName('img')[0];
 									img.setAttribute('src',data.headimgurl);
 									++CurPersonNum;
@@ -225,16 +225,16 @@
 										setTimeout(function(){
 											$('.show_info').removeClass(_out[rand_out]);
 											$('.show_info').hide();
-											getmessages();
-										},1000);
-									},1500);
-								},1000);
+											get_sign_in();
+										},1000);//出场动画时间
+									},1500);//展示时间
+								},1000);//进场动画时间
 							}
 			        }
 			    });	
 			}
 
-			function getdanmu(id) {
+			function getdanmu(id) {//获取实时弹幕
 				if(!id){id=0};
 				$.ajax({
 					type:"post",
@@ -244,11 +244,10 @@
 			        error: function(){
 			            alert('Error loading JSON document');  
 			        },  
-			        success: function(data){//如果调用php成功
+			        success: function(data){
 			        	if(!data){
 			        		getdanmu(id);
 			        	}else{
-			        		console.log(data);
 			        		var danmu=document.getElementById("danmu");
 			        		var div=document.createElement("div");
 			        		div.className='biu';
@@ -270,7 +269,9 @@
 			        }
 			    });	
 			}
-			load();
+			
+			load();//start
+
     		// 模拟推送数据
 			/*var s = setInterval(function(){
 				// get animate
