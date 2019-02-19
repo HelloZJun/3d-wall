@@ -200,7 +200,9 @@
 			        url: "ajax_sign_in.php",
 			        dataType: "json",
 			        error: function(){
-			            alert('Error loading JSON document');  
+			            console.log("ajax错误类型："+type);
+	         			console.log(err);
+			            alert('Error loading JSON document'); 
 			        },  
 			        success: function(data){
 			        		if(!data){
@@ -244,6 +246,8 @@
 			        data : {id:id},
 			        dataType: "json",
 			        error: function(){
+			            console.log("ajax错误类型："+type);
+	         			console.log(err);
 			            alert('Error loading JSON document');  
 			        },  
 			        success: function(data){
