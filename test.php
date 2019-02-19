@@ -1,12 +1,23 @@
 <?php
-	/*$servername = "localhost";
-    $username = "root";
-    $password = "mysql_zj";
-    // 创建连接
-    $conn = new mysqli($servername, $username, $password,"wall");
-    $sql = "select * from user where is_show = '1'";
-    $data=mysqli_query($conn,$sql);
+$mysql_conf = array(
+    'host'    => 'localhost', 
+    'db'      => 'wall', 
+    'db_user' => 'root', 
+    'db_pwd'  => 'mysql_zj', 
+    );
+$pdo = new PDO("mysql:host=" . $mysql_conf['host'] . ";dbname=" . $mysql_conf['db'], $mysql_conf['db_user'], $mysql_conf['db_pwd']);//创建一个pdo对象
+$pdo->exec("set names 'utf8'");
+$sql = "select * from user";
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(1, 'joshua', PDO::PARAM_STR);
+$rs = $stmt->execute();
+if ($rs) {
+    // PDO::FETCH_ASSOC 关联数组形式
+    // PDO::FETCH_NUM 数字索引数组形式
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        var_dump($row);
+    }
+}
 
-    mysqli_close($conn);*/
-    echo "$data";
+$pdo = null;//关闭连接
 ?>
