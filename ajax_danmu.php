@@ -8,6 +8,8 @@
     }else{
         $sql = "select * from text where time>$time limit 1";
     }
+    // 创建连接
+    $conn = new mysqli($servername, $username, $password,"wall");
     $data=mysqli_query($conn,$sql);
     $data=mysqli_fetch_assoc($data);
     $data=json_encode($data);
